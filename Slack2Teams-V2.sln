@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slack2Teams.Auth", "Slack2Teams.Auth\Slack2Teams.Auth.csproj", "{BD9484CF-CBC4-4B4F-835E-5411F084A773}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slack2Teams.Shared", "Slack2Teams.Shared\Slack2Teams.Shared.csproj", "{A0344637-A2D8-4CA1-B266-D413F0562BFA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slack2Teams.Api", "Slack2Teams.Api\Slack2Teams.Api.csproj", "{45C84556-9D8C-4907-9603-70CC55D7D523}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slack2Teams.Data", "Slack2Teams.Data\Slack2Teams.Data.csproj", "{3434A005-537B-4ECF-9404-C0EF9B34D39C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BD9484CF-CBC4-4B4F-835E-5411F084A773}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD9484CF-CBC4-4B4F-835E-5411F084A773}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD9484CF-CBC4-4B4F-835E-5411F084A773}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD9484CF-CBC4-4B4F-835E-5411F084A773}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0344637-A2D8-4CA1-B266-D413F0562BFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0344637-A2D8-4CA1-B266-D413F0562BFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0344637-A2D8-4CA1-B266-D413F0562BFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0344637-A2D8-4CA1-B266-D413F0562BFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45C84556-9D8C-4907-9603-70CC55D7D523}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45C84556-9D8C-4907-9603-70CC55D7D523}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45C84556-9D8C-4907-9603-70CC55D7D523}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45C84556-9D8C-4907-9603-70CC55D7D523}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3434A005-537B-4ECF-9404-C0EF9B34D39C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3434A005-537B-4ECF-9404-C0EF9B34D39C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3434A005-537B-4ECF-9404-C0EF9B34D39C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3434A005-537B-4ECF-9404-C0EF9B34D39C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

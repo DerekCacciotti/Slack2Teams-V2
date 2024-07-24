@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Slack2Teams.Api.Interfaces;
 using Slack2Teams.Auth.Interfaces;
 using Slack2Teams.Shared.Models;
 using Slack2Teams.Shared.Models.Responses;
+using Slack2Teams.Shared.Settings;
 
 namespace Slack2Teams.Api.Controllers
 {
@@ -14,11 +16,13 @@ namespace Slack2Teams.Api.Controllers
     {
         private readonly IAuth _authService;
         private readonly ITenantService _tenantService;
+        private readonly IOptions<AppSettings> _settings;
 
-        public AccountController(IAuth authService, ITenantService tenantService)
+        public AccountController(IAuth authService, ITenantService tenantService, IOptions<AppSettings> settings)
         {
             _authService = authService;
             _tenantService = tenantService;
+            _settings = settings;
         }
 
         [HttpPost("CreateAccount")]
@@ -63,6 +67,7 @@ namespace Slack2Teams.Api.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginModel model)
         {
+            var slack = _settings.Value.SharedSettings.Slack;
             if (ModelState.IsValid)
             {
                 var result = await _authService.Login(model);

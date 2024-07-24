@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Slack2Teams.Data;
 
@@ -11,9 +12,11 @@ using Slack2Teams.Data;
 namespace Slack2Teams.Data.Migrations
 {
     [DbContext(typeof(Slack2TeamsContext))]
-    partial class Slack2TeamsContextModelSnapshot : ModelSnapshot
+    [Migration("20240724032144_AddingSlackToken")]
+    partial class AddingSlackToken
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,7 +45,10 @@ namespace Slack2Teams.Data.Migrations
                     b.Property<string>("Editor")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("SlackTokenFK")
+                    b.Property<Guid>("SlackTokenFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("SlackTokenUserSlackTokenPK")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("TenantName")
@@ -54,6 +60,8 @@ namespace Slack2Teams.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("TenantPK");
+
+                    b.HasIndex("SlackTokenUserSlackTokenPK");
 
                     b.ToTable("Tenant");
                 });
@@ -90,6 +98,15 @@ namespace Slack2Teams.Data.Migrations
                     b.HasKey("UserSlackTokenPK");
 
                     b.ToTable("UserSlackToken");
+                });
+
+            modelBuilder.Entity("Slack2Teams.Data.Models.Tenant", b =>
+                {
+                    b.HasOne("Slack2Teams.Data.Models.UserSlackToken", "SlackToken")
+                        .WithMany()
+                        .HasForeignKey("SlackTokenUserSlackTokenPK");
+
+                    b.Navigation("SlackToken");
                 });
 #pragma warning restore 612, 618
         }

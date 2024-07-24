@@ -12,6 +12,7 @@ using Slack2Teams.Auth.Interfaces;
 using Slack2Teams.Auth.Services;
 using Slack2Teams.Data;
 
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddJsonFile("appsettings.json", false, true);
 builder.Configuration.AddJsonFile("appsettings.Development.json", true, true);

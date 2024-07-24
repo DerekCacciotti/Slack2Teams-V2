@@ -3,18 +3,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Slack2Teams.Data.Interfaces;
 
 namespace Slack2Teams.Data.Models;
-[Table("Tenant")]
-public class Tenant: IDatabase
+[Table("UserSlackToken")]
+public class UserSlackToken : IDatabase
 {
     [Key]
     [Column(Order = 0)]
-    public Guid TenantPK { get; set; }
-    public string UserFK { get; set; }
-    public string TenantName { get; set; }
+    public Guid UserSlackTokenPK { get; set; }
+    [Column(Order = 1)]
+    public string SlackToken { get; set; }
     public string Creator { get; set; }
     public DateTime CreateDate { get; set; }
     public string Editor { get; set; }
     public DateTime? EditDate { get; set; }
-    public Guid? SlackTokenFK { get; set; }
-    public virtual UserSlackToken? SlackToken { get; set; }
+    [Column(Order = 2)]
+    public DateTime ExpirationDate { get; set; }
 }

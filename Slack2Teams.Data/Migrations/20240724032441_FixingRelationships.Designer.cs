@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Slack2Teams.Data;
 
@@ -11,9 +12,11 @@ using Slack2Teams.Data;
 namespace Slack2Teams.Data.Migrations
 {
     [DbContext(typeof(Slack2TeamsContext))]
-    partial class Slack2TeamsContextModelSnapshot : ModelSnapshot
+    [Migration("20240724032441_FixingRelationships")]
+    partial class FixingRelationships
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,7 +45,7 @@ namespace Slack2Teams.Data.Migrations
                     b.Property<string>("Editor")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("SlackTokenFK")
+                    b.Property<Guid>("SlackTokenFK")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("TenantName")

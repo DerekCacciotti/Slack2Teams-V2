@@ -29,8 +29,9 @@ public class Slack2TeamsContext: DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Tenant>().Property(t => t.SlackOAuthTokn).IsRequired(false);
         modelBuilder.Entity<Tenant>().Property(t => t.Editor).IsRequired(false);
+        modelBuilder.Entity<Tenant>().Ignore(t => t.SlackToken);
+        modelBuilder.Entity<UserSlackToken>().Property(st => st.Editor).IsRequired(false);
         base.OnModelCreating(modelBuilder);
     }
 }

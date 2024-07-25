@@ -10,6 +10,7 @@ public class Slack2TeamsContext: DbContext
     private readonly IOptions<AppSettings> _settings;
     
     public DbSet<Tenant> Tenants { get; set; }
+    public DbSet<UserSlackToken> UserSlackTokens { get; set; }
 
     public Slack2TeamsContext()
     {

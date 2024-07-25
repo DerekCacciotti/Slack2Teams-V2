@@ -67,7 +67,7 @@ namespace Slack2Teams.Api.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginModel model)
         {
-            var slack = _settings.Value.SharedSettings.Slack;
+           
             if (ModelState.IsValid)
             {
                 var result = await _authService.Login(model);

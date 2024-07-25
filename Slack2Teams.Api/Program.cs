@@ -7,6 +7,7 @@ using Slack2Teams.Shared.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Slack2Teams.Api.Interfaces;
+using Slack2Teams.Api.Managers;
 using Slack2Teams.Api.Services;
 using Slack2Teams.Auth.Interfaces;
 using Slack2Teams.Auth.Services;
@@ -57,6 +58,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IAuth, AuthService>();
 builder.Services.AddScoped<ITenantService, TenantService>();
+builder.Services.AddScoped<ISlackTokenManager, SlackTokenManager>();
 
 var app = builder.Build();
 

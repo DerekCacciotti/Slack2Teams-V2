@@ -1,6 +1,7 @@
 using Slack2Teams.Api.Interfaces;
 using Slack2Teams.Data;
 using Slack2Teams.Data.Models;
+using Slack2Teams.Shared.Models;
 
 namespace Slack2Teams.Api.Managers;
 
@@ -13,9 +14,9 @@ public class SlackTokenManager: ISlackTokenManager
         _ctx = ctx;
     }
 
-    public async Task SaveSlackTokenToTenant(Guid tenantFk, string token, string userName)
+    public async Task SaveSlackTokenToTenant(AddSlackTokenModel model)
     {
-        if (string.IsNullOrEmpty(token))
+        if (string.IsNullOrEmpty(model.Token))
         {
             // handle err btter
             throw new ApplicationException("Slack token is empty check for error");
@@ -24,15 +25,15 @@ public class SlackTokenManager: ISlackTokenManager
 
         var userSlackToken = new UserSlackToken()
         {
-            Creator = userName,
+            Creator = model.UserName,
             CreateDate = DateTime.Now,
-            SlackToken = token,
+            SlackToken = model.Token,
             ExpirationDate = DateTime.Now.AddHours(12)
         };
 
         await _ctx.UserSlackTokens.AddAsync(userSlackToken);
         await _ctx.SaveChangesAsync();
-       await attachTokenToTenant(tenantFk, userSlackToken.UserSlackTokenPK, userName);
+       await attachTokenToTenant(model.TenantFK, userSlackToken.UserSlackTokenPK, model.UserName);
 
     }
 

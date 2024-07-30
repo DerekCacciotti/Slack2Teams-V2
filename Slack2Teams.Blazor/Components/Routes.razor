@@ -1,7 +1,6 @@
 ﻿@rendermode @(new InteractiveServerRenderMode(prerender:false))
 @using Slack2Teams.Blazor.Components.Layout
 <CascadingAuthenticationState>
-    <CookieConsentHandler>
         <Router AppAssembly="@typeof(Program).Assembly">
             <Found Context="routeData">
                 <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
@@ -17,6 +16,4 @@
                 </LayoutView>
             </NotFound>
         </Router>
-    </CookieConsentHandler>
-
 </CascadingAuthenticationState>

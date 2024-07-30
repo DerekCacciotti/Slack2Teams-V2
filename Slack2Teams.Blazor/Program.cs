@@ -1,10 +1,12 @@
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
+using Radzen;
 using Slack2Teams.Shared.Interfaces;
 using Slack2Teams.Blazor.Components;
 using Slack2Teams.Shared.Providers;
 using Slack2Teams.Shared.Services;
 using Slack2Teams.Shared.Settings;
+
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddJsonFile("appsettings.json", false, true);
@@ -22,6 +24,8 @@ builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddAuthorizationCore();
 builder.Services.AddHttpClient("Slack2TeamsApi",
     c => c.BaseAddress = new Uri(appSettings.Environment.Local.Slack2TeamsApi));
+builder.Services.AddRadzenComponents();
+
 
 var app = builder.Build();
 

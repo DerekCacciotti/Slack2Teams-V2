@@ -1,0 +1,29 @@
+@inject  NavigationManager _NavigationManager
+<RadzenPanelMenu>
+    <AuthorizeView>
+        <NotAuthorized>
+            <RadzenPanelMenuItem Text="Login" Icon="power_settings_new" Click="GoToLogin"/>
+            <RadzenPanelMenuItem Text="Sign Up" Icon="person_add" Click="GoToCreateAccount"/>
+        </NotAuthorized>
+        <Authorized>
+            <RadzenLabel Text="Logged in"></RadzenLabel>
+        </Authorized>
+    </AuthorizeView>
+   
+</RadzenPanelMenu>
+
+@code {
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    private void GoToLogin()
+    {
+        
+    }
+
+    private void GoToCreateAccount()
+    {
+        
+    }
+    
+}

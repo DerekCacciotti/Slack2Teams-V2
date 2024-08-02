@@ -1,0 +1,21 @@
+<RadzenCard class="rz-my-12 rz-mx-auto" Style="max-width: 900px">
+    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" Gap="1rem" class="rz-p-4">
+        <RadzenStack Gap="0">
+            @if (string.IsNullOrEmpty(Title))
+            {
+                @Header
+            }
+            else
+            {
+                <RadzenText TextStyle="TextStyle.H4" class="rz-display-flex rz-mt-2 rz-my-0">@Title</RadzenText>
+            }
+            
+        </RadzenStack>
+    </RadzenStack>
+    <RadzenCard class="rz-shadow-0 rz-border-radius-0 rz-p-8" style="margin: 1rem calc(-1 * var(--rz-card-padding));">
+        @Content
+    </RadzenCard>
+    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" Gap="0">
+       @ActionButtons
+    </RadzenStack>
+</RadzenCard>

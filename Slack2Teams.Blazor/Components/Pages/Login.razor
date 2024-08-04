@@ -1,6 +1,16 @@
 @page "/Login"
+<PageTitle>Login</PageTitle>
+<S2TCard Title="Login">
+    <Content>
+        <RadzenTemplateForm Data="_model">
+            <RadzenLogin Style="flex: 0;" @ref="_loginForm" AllowResetPassword="true"  AllowRememberMe="false" Login="LoginUser"></RadzenLogin>
+        </RadzenTemplateForm>
 
-
-@code {
-    
-}
+    </Content>
+</S2TCard>
+<style>
+    .rz-login .rz-form .rz-form-row .rz-label
+    {
+        flex: 0;
+    }
+</style>

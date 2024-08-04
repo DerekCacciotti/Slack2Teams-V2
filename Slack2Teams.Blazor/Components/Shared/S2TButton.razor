@@ -1,0 +1,4 @@
+<RadzenButton Text="@Text" Icon="@Icon" ButtonStyle="@ButtonColor" Variant="Variant.Filled" IsBusy="@showSpinner" Size="@(Size ?? ButtonSize.Medium)" 
+              Disabled="@(ButtonDisabled.HasValue ? ButtonDisabled.Value : false)" Style="@(!string.IsNullOrEmpty(Styles) ? Styles : string.Empty)"
+              Click="OnClickAction"></RadzenButton>
+

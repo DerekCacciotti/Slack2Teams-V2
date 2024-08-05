@@ -2,8 +2,17 @@
 <PageTitle>Login</PageTitle>
 <S2TCard Title="Login">
     <Content>
+        @if (hasError)
+        {
+            @foreach (var error in errors)
+            {
+                <RadzenAlert AlertStyle="AlertStyle.Danger" Title="Error Logging In">
+                    @error
+                </RadzenAlert>
+            }
+        }
         <RadzenTemplateForm Data="_model">
-            <RadzenLogin Style="flex: 0;" @ref="_loginForm" AllowResetPassword="true"  AllowRememberMe="false" Login="LoginUser"></RadzenLogin>
+            <RadzenLogin Style="flex: 0;" @ref="_loginForm" AllowResetPassword="true" AllowRememberMe="false" Login="LoginUser" ></RadzenLogin>
         </RadzenTemplateForm>
 
     </Content>

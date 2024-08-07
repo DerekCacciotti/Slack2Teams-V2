@@ -1,0 +1,52 @@
+@page "/Register"
+
+<PageTitle>Register</PageTitle>
+<S2TCard Title="Register for an Account">
+    <Content>
+        @if (hasError)
+        {
+        @foreach (var error in errors)
+        {
+        <RadzenAlert AlertStyle="AlertStyle.Danger" Title="Error Creating Account">
+            @error
+        </RadzenAlert>
+        }
+        }
+        <RadzenTemplateForm Data="@_model" @ref="@_form">
+            <div class="form-group">
+                <label for="username">First Name:</label>
+                <RadzenTextBox @bind-Value="@_model.FirstName" Name="FirstName" Style="width: 100%"/>
+                <RadzenDataAnnotationValidator Component="FirstName"></RadzenDataAnnotationValidator>
+            </div>
+            <div class="form-group">
+                <label for="username">Last Name:</label>
+                <RadzenTextBox @bind-Value="@_model.LastName" Name="LastName" Style="width: 100%"/>
+                <RadzenDataAnnotationValidator Component="LastName"/>
+            </div>
+            <div class="form-group">
+                <label for="username">UserName:</label>
+                <RadzenTextBox @bind-Value="@_model.UserName" Name="UserName" Style="width: 100%"/>
+                <RadzenDataAnnotationValidator Component="UserName"></RadzenDataAnnotationValidator>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <RadzenPassword @bind-Value="@_model.Password" Name="Password" Style="width: 100%"/>
+                <RadzenDataAnnotationValidator Component="Password"></RadzenDataAnnotationValidator>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address: </label>
+                <RadzenTextBox @bind-Value="@_model.EmailAddress" Name="EmailAddress" Style="width: 100%"/>
+                <RadzenDataAnnotationValidator Component="EmailAddress"></RadzenDataAnnotationValidator>
+            </div>
+            <div class="form-group">
+                <label for="tenant">Account Nickname (optional)</label>
+                <RadzenTextBox @bind-Value="@_model.TenantName" Name="Tenant" Style="width: 100%"/>
+            </div>
+        </RadzenTemplateForm>
+    </Content>
+    <ActionButtons>
+        <S2TButton Icon="person_add" ButtonColor="ButtonStyle.Primary" Text="Register" Styles="margin-right:7px;" OnClick="RegisterAccount"></S2TButton>
+        <S2TButton Text="Cancel" Icon="cancel" ButtonColor="ButtonStyle.Secondary" OnClick="Cancel"></S2TButton>
+    </ActionButtons>
+</S2TCard>
+

@@ -23,10 +23,17 @@ public class JWT
 public class SharedSettings
 {
     public Slack Slack { get; set; }
+    public Blazor Blazor { get; set; }
 }
 
 public class Slack
 {
     public string ClientID { get; set; }
     public string ClientSecret { get; set; }
+    public string BaseUrl { get; set; }
+}
+
+public class Blazor
+{
+    public string AppUrl { get; set; }
 }

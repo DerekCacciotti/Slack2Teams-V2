@@ -59,6 +59,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IAuth, AuthService>();
 builder.Services.AddScoped<ITenantService, TenantService>();
 builder.Services.AddScoped<ISlackTokenManager, SlackTokenManager>();
+builder.Services.AddHttpClient("SlackApi", sa => sa.BaseAddress = new Uri(appsettings.SharedSettings.Slack.BaseUrl));
 
 var app = builder.Build();
 

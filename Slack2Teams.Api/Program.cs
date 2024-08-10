@@ -10,8 +10,10 @@ using Slack2Teams.Api.Interfaces;
 using Slack2Teams.Api.Managers;
 using Slack2Teams.Api.Services;
 using Slack2Teams.Auth.Interfaces;
-using Slack2Teams.Auth.Services;
 using Slack2Teams.Data;
+using Slack2Teams.Shared.Interfaces;
+using Slack2Teams.Shared.Services;
+using AuthService = Slack2Teams.Auth.Services.AuthService;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -56,10 +58,13 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IAuth, AuthService>();
 builder.Services.AddScoped<ITenantService, TenantService>();
 builder.Services.AddScoped<ISlackTokenManager, SlackTokenManager>();
 builder.Services.AddHttpClient("SlackApi", sa => sa.BaseAddress = new Uri(appsettings.SharedSettings.Slack.BaseUrl));
+builder.Services.AddScoped<ISlackApiCaller, SlackApiCaller>();
+
 
 var app = builder.Build();
 

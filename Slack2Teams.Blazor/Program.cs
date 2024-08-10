@@ -18,12 +18,14 @@ section.Bind(appSettings);
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
 builder.Services.AddScoped<IAuthService,  AuthService>();
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddAuthorizationCore();
 builder.Services.AddHttpClient("Slack2TeamsApi",
     c => c.BaseAddress = new Uri(appSettings.Environment.Local.Slack2TeamsApi));
+builder.Services.AddScoped<ISlackDataService, SlackDataService>();
 builder.Services.AddRadzenComponents();
 
 

@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Radzen;
 using Slack2Teams.Shared.Interfaces;
 using Slack2Teams.Blazor.Components;
+using Slack2Teams.Blazor.Interfaces;
+using Slack2Teams.Blazor.Services;
 using Slack2Teams.Shared.Providers;
 using Slack2Teams.Shared.Services;
 using Slack2Teams.Shared.Settings;
@@ -26,6 +28,7 @@ builder.Services.AddAuthorizationCore();
 builder.Services.AddHttpClient("Slack2TeamsApi",
     c => c.BaseAddress = new Uri(appSettings.Environment.Local.Slack2TeamsApi));
 builder.Services.AddScoped<ISlackDataService, SlackDataService>();
+builder.Services.AddScoped<IUserTenantService, UserTenantService>();
 builder.Services.AddRadzenComponents();
 
 

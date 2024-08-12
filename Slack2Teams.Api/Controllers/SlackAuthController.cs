@@ -27,21 +27,7 @@ namespace Slack2Teams.Api.Controllers
             _slackTokenManager = slackTokenManager;
             _settings = settings;
         }
-
-        [HttpPost("AddTokentoTenant")]
-        public async Task<IActionResult> AddTokenToTenant(AddSlackTokenModel model)
-        {
-            try
-            {
-                await _slackTokenManager.SaveSlackTokenToTenant(model);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-            
-        }
+        
         [HttpGet("OAuthToken")]
         [AllowAnonymous]
         public async Task<IActionResult> GetSlackOAuthToken([FromQuery] string code)

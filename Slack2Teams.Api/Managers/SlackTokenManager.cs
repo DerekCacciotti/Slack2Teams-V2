@@ -27,7 +27,7 @@ public class SlackTokenManager: ISlackTokenManager
     {
         if (string.IsNullOrEmpty(model.Token))
         {
-            // handle err btter
+            // handle err better
             throw new ApplicationException("Slack token is empty check for error");
         }
         

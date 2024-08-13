@@ -10,7 +10,6 @@ public class Slack2TeamsContext: DbContext
     private readonly IOptions<AppSettings> _settings;
     
     public DbSet<Tenant> Tenants { get; set; }
-    public DbSet<UserSlackToken> UserSlackTokens { get; set; }
 
     public Slack2TeamsContext()
     {
@@ -31,8 +30,6 @@ public class Slack2TeamsContext: DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Tenant>().Property(t => t.Editor).IsRequired(false);
-        modelBuilder.Entity<Tenant>().Ignore(t => t.SlackToken);
-        modelBuilder.Entity<UserSlackToken>().Property(st => st.Editor).IsRequired(false);
         base.OnModelCreating(modelBuilder);
     }
 }

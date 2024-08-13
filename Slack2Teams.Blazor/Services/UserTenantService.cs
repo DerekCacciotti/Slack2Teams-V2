@@ -37,17 +37,17 @@ public class UserTenantService: IUserTenantService
         }
     }
 
-    public async Task SaveSlackTokenToTenant(AddSlackTokenModel model)
-    {
-        var token = await _localStorage.GetItemAsStringAsync("authToken");
-        var client = _http.CreateClient("Slack2TeamsApi");
-        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-        var json = JsonConvert.SerializeObject(model);
-        var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
-        var response = await client.PostAsync("Tenant/SaveSlackToken", content);
-        if (!response.IsSuccessStatusCode)
-        {
-            throw new ApplicationException("Failed to save token");
-        }
-    }
+    // public async Task SaveSlackTokenToTenant(AddSlackTokenModel model)
+    // {
+    //     var token = await _localStorage.GetItemAsStringAsync("authToken");
+    //     var client = _http.CreateClient("Slack2TeamsApi");
+    //     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+    //     var json = JsonConvert.SerializeObject(model);
+    //     var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+    //     var response = await client.PostAsync("Tenant/SaveSlackToken", content);
+    //     if (!response.IsSuccessStatusCode)
+    //     {
+    //         throw new ApplicationException("Failed to save token");
+    //     }
+    // }
 }

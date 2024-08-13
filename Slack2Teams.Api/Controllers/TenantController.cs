@@ -43,20 +43,6 @@ namespace Slack2Teams.Api.Controllers
             return Ok(response);
         }
         
-        [HttpPost("SaveSlackToken")]
-        public async Task<IActionResult> SaveSlackToken(AddSlackTokenModel model)
-        {
-            try
-            {
-                await _tenantService.SaveSlackTokenToTenant(model);
-                return Ok();
-            }
-            catch (Exception e)
-            { 
-                return BadRequest(e.Message);
-               
-            }
-        }
         
         
     }

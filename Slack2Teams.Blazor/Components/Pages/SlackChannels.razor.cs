@@ -1,6 +1,8 @@
+using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Slack2Teams.Blazor.Interfaces;
+using Slack2Teams.Shared;
 using Slack2Teams.Shared.Interfaces;
 using Slack2Teams.Shared.Models;
 using Slack2Teams.Shared.Models.Requests;
@@ -19,6 +21,8 @@ public partial class SlackChannels : ComponentBase
     private IHttpContextAccessor _httpContextAccessor { get; set; }
     [Inject]
     private IUserTenantService _userTenantService { get; set; }
+    [Inject]
+    private ILocalStorageService _localStorageService { get; set; }
     
     protected override async Task OnInitializedAsync()
     {
@@ -29,18 +33,21 @@ public partial class SlackChannels : ComponentBase
             var tenantPK = await _userTenantService.GetTenantIdForUser();
             if(tenantPK != Guid.Empty)
             {
-                var addSlackTokenModel = new AddSlackTokenModel()
+                var tenantInfo = new UserTenantInfo()
                 {
                     TenantFK = tenantPK,
                     UserName = authenticationStateTask.Result.User.Identity.Name,
                     Token = cookieValue
                 };
-                await _userTenantService.SaveSlackTokenToTenant(addSlackTokenModel);
+                
+                var tenantJson = Utilities.ConvertToJson(tenantInfo);
+                await _localStorageService.SetItemAsStringAsync("S2TTenant", tenantJson);
             }
             var slackDataRequest = new SlackDataRequest()
             {
                 Token = cookieValue
             };
+         
             var channels = await _slackDataService.GetSlackChannelData(slackDataRequest);
         }
         

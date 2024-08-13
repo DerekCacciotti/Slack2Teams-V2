@@ -51,6 +51,7 @@ public class AuthService : IAuthService
     {
         var clinet = _http.CreateClient("Slack2TeamsApi");
         await _localStorage.RemoveItemAsync("authToken");
+        await _localStorage.RemoveItemAsync("S2TTenant");
         ((ApiAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsLoggedOut();
         clinet.DefaultRequestHeaders.Authorization = null;
     }

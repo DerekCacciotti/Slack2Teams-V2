@@ -8,7 +8,6 @@ public interface ITenantService
     Task CreateTenant(string userFK, string name);
     Task<Tenant> GetTenant(Guid tenantPK);
     Task RemoveTenant(Guid tenantPK);
-    Task SaveSlackTokenToTenant(AddSlackTokenModel model);
     Task<Tenant> GetTenantByUserFK(string userFK);
 
 }

@@ -15,6 +15,5 @@ public class Tenant: IDatabase
     public DateTime CreateDate { get; set; }
     public string Editor { get; set; }
     public DateTime? EditDate { get; set; }
-    public Guid? SlackTokenFK { get; set; }
-    public virtual UserSlackToken? SlackToken { get; set; }
+    
 }

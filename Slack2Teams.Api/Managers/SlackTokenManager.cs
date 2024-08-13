@@ -23,28 +23,7 @@ public class SlackTokenManager: ISlackTokenManager
         _http = http;
     }
 
-    public async Task SaveSlackTokenToTenant(AddSlackTokenModel model)
-    {
-        if (string.IsNullOrEmpty(model.Token))
-        {
-            // handle err better
-            throw new ApplicationException("Slack token is empty check for error");
-        }
-        
-
-        var userSlackToken = new UserSlackToken()
-        {
-            Creator = model.UserName,
-            CreateDate = DateTime.Now,
-            SlackToken = model.Token,
-            ExpirationDate = DateTime.Now.AddHours(12)
-        };
-
-        await _ctx.UserSlackTokens.AddAsync(userSlackToken);
-        await _ctx.SaveChangesAsync();
-       await attachTokenToTenant(model.TenantFK, userSlackToken.UserSlackTokenPK, model.UserName);
-
-    }
+    
 
     public async Task<string> GetSlackOAuthToken(string code)
     {
@@ -68,17 +47,5 @@ public class SlackTokenManager: ISlackTokenManager
 
         return token;
 
-    }
-
-    private async Task attachTokenToTenant(Guid tenantFK, Guid userSlackTokenFK, string userName)
-    {
-        var tenant = await _ctx.Tenants.FindAsync(tenantFK);
-        if (tenant != null)
-        {
-            tenant.SlackTokenFK = userSlackTokenFK;
-            tenant.Editor = userName;
-            tenant.EditDate = DateTime.Now;
-            await _ctx.SaveChangesAsync();
-        }
     }
 }

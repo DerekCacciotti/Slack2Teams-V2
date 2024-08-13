@@ -1,6 +1,6 @@
 namespace Slack2Teams.Shared.Models;
 
-public class AddSlackTokenModel
+public class UserTenantInfo
 {
     public Guid TenantFK { get; set; }
     public string Token { get; set; }

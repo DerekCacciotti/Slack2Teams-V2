@@ -1,0 +1,14 @@
+<RadzenDataGrid AllowFiltering="true" AllowColumnResize="false" FilterMode="FilterMode.Advanced"
+                AllowSorting="true" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left"
+                LogicalFilterOperator="LogicalFilterOperator.Or" SelectionMode="DataGridSelectionMode.Multiple"
+                Data="@SlackChannels">
+    <Columns>
+        <RadzenDataGridColumn Title="Select">
+            <Template>
+                <RadzenCheckBox TabIndex="-1" TriState="false" TValue="bool"></RadzenCheckBox>
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="SlackChannel" Property="@nameof(SlackChannel.name)" Title="Name" Filterable="true"/>
+
+    </Columns>
+</RadzenDataGrid>

@@ -6,6 +6,7 @@ using Slack2Teams.Shared;
 using Slack2Teams.Shared.Interfaces;
 using Slack2Teams.Shared.Models;
 using Slack2Teams.Shared.Models.Requests;
+using Slack2Teams.Shared.Models.Responses.SlackResponses;
 
 namespace Slack2Teams.Blazor.Components.Pages;
 
@@ -23,6 +24,8 @@ public partial class SlackChannels : ComponentBase
     private IUserTenantService _userTenantService { get; set; }
     [Inject]
     private ILocalStorageService _localStorageService { get; set; }
+
+    private SlackChannelResponse _slackChannelResponse = new SlackChannelResponse();
     
     protected override async Task OnInitializedAsync()
     {
@@ -48,7 +51,7 @@ public partial class SlackChannels : ComponentBase
                 Token = cookieValue
             };
          
-            var channels = await _slackDataService.GetSlackChannelData(slackDataRequest);
+            _slackChannelResponse = await _slackDataService.GetSlackChannelData(slackDataRequest);
         }
         
     }

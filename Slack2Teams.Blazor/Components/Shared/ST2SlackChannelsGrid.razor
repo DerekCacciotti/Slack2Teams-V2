@@ -3,12 +3,12 @@
                 LogicalFilterOperator="LogicalFilterOperator.Or" SelectionMode="DataGridSelectionMode.Multiple"
                 Data="@SlackChannels">
     <Columns>
-        <RadzenDataGridColumn Title="Select">
-            <Template>
-                <RadzenCheckBox TabIndex="-1" TriState="false" TValue="bool"></RadzenCheckBox>
+        <RadzenDataGridColumn TItem="SlackChannel" Width="40px" Filterable="false" Sortable="false">
+            <Template Context="channel">
+                <RadzenCheckBox TValue="bool" Value="@(selectedChannels.Contains(channel))" Change="@(args => OnSelectionChanged(args, channel))" />
             </Template>
         </RadzenDataGridColumn>
-        <RadzenDataGridColumn TItem="SlackChannel" Property="@nameof(SlackChannel.name)" Title="Name" Filterable="true"/>
-
+        <RadzenDataGridColumn TItem="SlackChannel" Property="name" Title="Channel Name" />
+       
     </Columns>
 </RadzenDataGrid>

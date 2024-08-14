@@ -1,7 +1,16 @@
 @page "/SlackChannels"
 <S2TCard Title="Please choose the Slack Channels you would like to import to Microsoft Teams">
     <Content>
-        <ST2SlackChannelsGrid SlackChannels="@_slackChannelResponse.channels"></ST2SlackChannelsGrid>
+        @if (hasError)
+        {
+            <RadzenAlert AlertStyle="AlertStyle.Danger" Variant="Variant.Flat">
+                You must select at least one channel to import.
+            </RadzenAlert>
+        }
+        <ST2SlackChannelsGrid SlackChannels="@_slackChannelResponse.channels" @ref="_slackChannelsGrid"></ST2SlackChannelsGrid>
     </Content>
+    <ActionButtons>
+        <S2TButton Icon="add" Text="Import" ButtonColor="ButtonStyle.Primary" OnClick="GatherDataForImport"></S2TButton>
+    </ActionButtons>
 </S2TCard>
 

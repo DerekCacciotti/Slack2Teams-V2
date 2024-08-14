@@ -1,6 +1,7 @@
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Slack2Teams.Blazor.Components.Shared;
 using Slack2Teams.Blazor.Interfaces;
 using Slack2Teams.Shared;
 using Slack2Teams.Shared.Interfaces;
@@ -26,6 +27,9 @@ public partial class SlackChannels : ComponentBase
     private ILocalStorageService _localStorageService { get; set; }
 
     private SlackChannelResponse _slackChannelResponse = new SlackChannelResponse();
+    private ST2SlackChannelsGrid _slackChannelsGrid { get; set; }
+    private bool hasError = false;
+    
     
     protected override async Task OnInitializedAsync()
     {
@@ -54,5 +58,15 @@ public partial class SlackChannels : ComponentBase
             _slackChannelResponse = await _slackDataService.GetSlackChannelData(slackDataRequest);
         }
         
+    }
+
+    private async Task GatherDataForImport()
+    {
+        hasError = false;
+        var selectedChannels = await _slackChannelsGrid.GetSelectedChannels();
+        if (!selectedChannels.Any())
+        {
+            hasError = true;
+        }
     }
 }

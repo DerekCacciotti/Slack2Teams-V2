@@ -10,6 +10,7 @@ public class Slack2TeamsContext: DbContext
     private readonly IOptions<AppSettings> _settings;
     
     public DbSet<Tenant> Tenants { get; set; }
+    public DbSet<StagedSlackChannel> SlackChannels { get; set; }
 
     public Slack2TeamsContext()
     {
@@ -30,6 +31,8 @@ public class Slack2TeamsContext: DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Tenant>().Property(t => t.Editor).IsRequired(false);
+        modelBuilder.Entity<StagedSlackChannel>().Property(s => s.Editor).IsRequired(false);
+        modelBuilder.Entity<StagedSlackChannel>().Property(s => s.ChannelDescription).IsRequired(false);
         base.OnModelCreating(modelBuilder);
     }
 }

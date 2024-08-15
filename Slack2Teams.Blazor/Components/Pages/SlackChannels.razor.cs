@@ -1,6 +1,7 @@
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Newtonsoft.Json;
 using Slack2Teams.Blazor.Components.Shared;
 using Slack2Teams.Blazor.Interfaces;
 using Slack2Teams.Shared;
@@ -25,6 +26,8 @@ public partial class SlackChannels : ComponentBase
     private IUserTenantService _userTenantService { get; set; }
     [Inject]
     private ILocalStorageService _localStorageService { get; set; }
+    [Inject]
+    private ISlackChannelStagerService _slackChannelStagerService { get; set; }
 
     private SlackChannelResponse _slackChannelResponse = new SlackChannelResponse();
     private ST2SlackChannelsGrid _slackChannelsGrid { get; set; }
@@ -68,5 +71,28 @@ public partial class SlackChannels : ComponentBase
         {
             hasError = true;
         }
+        var tenantJson = await _localStorageService.GetItemAsStringAsync("S2TTenant");
+        var authToken = await _localStorageService.GetItemAsStringAsync("authToken");
+        if (!string.IsNullOrEmpty(tenantJson) && !string.IsNullOrEmpty(authToken))
+        {
+            var tenantInfo = JsonConvert.DeserializeObject<UserTenantInfo>(tenantJson); 
+            var stageRequest = new StageSlackChannelsRequest()
+            {
+               UserToken = authToken,
+                UserTenantInfo = tenantInfo,
+                CreatedBy = authenticationStateTask.Result.User.Identity.Name,
+                channels = selectedChannels
+            };
+            var result = await _slackChannelStagerService.StageSlackChannelsForMigration(stageRequest);
+            if (result)
+            {
+               // get files based on import 
+            }
+            else
+            {
+                hasError = true;
+            }
+        }
+        
     }
 }

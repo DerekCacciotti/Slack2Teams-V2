@@ -29,6 +29,7 @@ builder.Services.AddHttpClient("Slack2TeamsApi",
     c => c.BaseAddress = new Uri(appSettings.Environment.Local.Slack2TeamsApi));
 builder.Services.AddScoped<ISlackDataService, SlackDataService>();
 builder.Services.AddScoped<IUserTenantService, UserTenantService>();
+builder.Services.AddScoped<ISlackChannelStagerService, SlackChannelStagingService>();
 builder.Services.AddRadzenComponents();
 
 

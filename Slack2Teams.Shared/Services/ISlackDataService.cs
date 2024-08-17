@@ -30,4 +30,16 @@ public class SlackDataService : ISlackDataService
         var result = JsonSerializer.Deserialize<SlackChannelResponse>(content);
         return result;
     }
+
+    public async Task<List<SlackMessageResponse>> GetSlackMessageData(SlackChannelMessageDataRequest slackChannelMessageDataRequest)
+    {
+        var s2tToken = await _localStorage.GetItemAsStringAsync("authToken");
+        var json = JsonSerializer.Serialize(slackChannelMessageDataRequest);
+        var client = _http.CreateClient("Slack2TeamsApi");
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", s2tToken);
+        var response = await client.PostAsync("SlackData/GetSlackMessages", new StringContent(json, Encoding.UTF8, "application/json"));
+        var content = await response.Content.ReadAsStringAsync();
+        var result = JsonSerializer.Deserialize<List<SlackMessageResponse>>(content);
+        return result;
+    }
 }

@@ -27,4 +27,34 @@ public class SlackApiCaller: ISlackApiCaller
         }
         return result;
     }
+
+    public async Task<List<SlackMessageResponse>> GetSlackMessages(string token, List<string> channelIds)
+    {
+        var messages = new List<SlackMessageResponse>();
+        var client = _httpClientFactory.CreateClient("SlackApi");
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        foreach (var channelId in channelIds) 
+        {
+            var postData = new Dictionary<string, string>
+            {
+                {"channel", channelId }
+            };
+            var content = new FormUrlEncodedContent(postData);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
+            var response = await client.PostAsync($"conversations.history", content);
+            if (response.IsSuccessStatusCode)
+            {
+                var rawData = await response.Content.ReadAsStringAsync();
+                var data = JsonSerializer.Deserialize<SlackMessageResponse>(rawData);
+                data.channelid = channelId;
+                messages.Add(data);
+            }
+            else
+            {
+                throw new Exception("Failed to get messages from Slack");
+            }
+            
+        }
+        return messages;
+    }
 }

@@ -35,5 +35,32 @@ namespace Slack2Teams.Api.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpPost("GetSlackMessages")]
+        public async Task<IActionResult> GetSlackMessages(SlackChannelMessageDataRequest slackChannelMessageDataRequest)
+        {
+            try
+            {
+                if(string.IsNullOrEmpty(slackChannelMessageDataRequest.Token))
+                {
+                    return BadRequest("No token found");
+                }
+                if(slackChannelMessageDataRequest.ChannelIds == null || slackChannelMessageDataRequest.ChannelIds.Count == 0)
+                {
+                    return BadRequest("No channel ids found");
+                }
+                
+                var messages = await _slackApiCaller.GetSlackMessages(slackChannelMessageDataRequest.Token, slackChannelMessageDataRequest.ChannelIds);
+                return Ok(messages);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest();
+               
+            }
+            
+            
+        }
     }
 }

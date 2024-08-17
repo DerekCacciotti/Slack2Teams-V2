@@ -86,7 +86,8 @@ public partial class SlackChannels : ComponentBase
             var result = await _slackChannelStagerService.StageSlackChannelsForMigration(stageRequest);
             if (result)
             {
-               // get files based on import 
+             var selectedChannelIds = selectedChannels.Select(x => x.id).ToList();
+             var messages = await GetMessages(selectedChannelIds, tenantInfo);
             }
             else
             {
@@ -94,5 +95,16 @@ public partial class SlackChannels : ComponentBase
             }
         }
         
+    }
+    
+    private async Task<List<SlackMessageResponse>> GetMessages(List<string> channelIds, UserTenantInfo tenantInfo)
+    {
+        ;
+        var slackChannelMessageDataRequest = new SlackChannelMessageDataRequest()
+        {
+            Token = tenantInfo.Token,
+            ChannelIds = channelIds
+        };
+        return await _slackDataService.GetSlackMessageData(slackChannelMessageDataRequest);
     }
 }

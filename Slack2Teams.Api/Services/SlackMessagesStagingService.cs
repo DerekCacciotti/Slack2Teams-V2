@@ -56,7 +56,7 @@ public class SlackMessagesStagingService : ISlackMessageStager
             Creator = slackChannel.Creator,
             CreateDate = DateTime.Now,
             SlackMessageType = messageType,
-            SlackMessageTypeFK = messageType.SlackMessageTypePK;
+            SlackMessageTypeFK = messageType.SlackMessageTypePK
         }).ToList();
 
         await _ctx.SlackMessages.AddRangeAsync(stagedmessages);

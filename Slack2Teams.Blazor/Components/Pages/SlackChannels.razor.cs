@@ -28,6 +28,8 @@ public partial class SlackChannels : ComponentBase
     private ILocalStorageService _localStorageService { get; set; }
     [Inject]
     private ISlackChannelStagerService _slackChannelStagerService { get; set; }
+    [Inject]
+    private ISlackMessageStagingService _slackMessageStagingService { get; set; }
 
     private SlackChannelResponse _slackChannelResponse = new SlackChannelResponse();
     private ST2SlackChannelsGrid _slackChannelsGrid { get; set; }
@@ -87,8 +89,19 @@ public partial class SlackChannels : ComponentBase
             if (result)
             {
              var selectedChannelIds = selectedChannels.Select(x => x.id).ToList();
-             var messages = await GetMessages(selectedChannelIds, tenantInfo);
-             
+             var responses = await GetMessages(selectedChannelIds, tenantInfo);
+             var messages = responses.SelectMany(r => r.messages).ToList();
+             var request = new StageSlackMessageRequest()
+             {
+                 Messages = messages,
+                 TenantFK = tenantInfo.TenantFK,
+                 UserToken = authToken
+             };
+             var messageResult = await _slackMessageStagingService.StageSlackMessage(request);
+             if (messageResult)
+             {
+                 // redirect for teams 
+             }
             }
             else
             {

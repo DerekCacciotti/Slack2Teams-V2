@@ -7,5 +7,6 @@ public class StageSlackMessageRequest
     public List<SlackMessage> Messages { get; set; }
     public Guid TenantFK { get; set; }
     public string SlackChannelId { get; set; }
+    public string UserToken { get; set; }
     
 }

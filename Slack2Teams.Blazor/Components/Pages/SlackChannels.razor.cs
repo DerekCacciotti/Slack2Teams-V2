@@ -88,6 +88,7 @@ public partial class SlackChannels : ComponentBase
             {
              var selectedChannelIds = selectedChannels.Select(x => x.id).ToList();
              var messages = await GetMessages(selectedChannelIds, tenantInfo);
+             
             }
             else
             {

@@ -6,6 +6,7 @@ using Slack2Teams.Auth.Models;
 using Slack2Teams.Shared.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Slack2Teams.Api.Code;
 using Slack2Teams.Api.Interfaces;
 using Slack2Teams.Api.Managers;
 using Slack2Teams.Api.Services;
@@ -65,6 +66,9 @@ builder.Services.AddScoped<ISlackTokenManager, SlackTokenManager>();
 builder.Services.AddHttpClient("SlackApi", sa => sa.BaseAddress = new Uri(appsettings.SharedSettings.Slack.BaseUrl));
 builder.Services.AddScoped<ISlackApiCaller, SlackApiCaller>();
 builder.Services.AddScoped<ISlackChannelStager, SlackChannelStagingService>();
+builder.Services.AddScoped<ISlackMessageStager, SlackMessagesStagingService>();
+builder.Services.AddScoped<ISlackChannelLoader, SlackChannelLoader>();
+builder.Services.AddScoped<ISlackMessageTypeLoader, SlackMessageTypeLoader>();
 
 
 var app = builder.Build();

@@ -12,10 +12,12 @@ namespace Slack2Teams.Api.Controllers
     public class StagingController : ControllerBase
     {
         private readonly ISlackChannelStager _slackChannelStager;
+        private readonly ISlackMessageStager _slackMessageStager;
 
-        public StagingController(ISlackChannelStager slackChannelStager)
+        public StagingController(ISlackChannelStager slackChannelStager, ISlackMessageStager slackMessageStager)
         {
             _slackChannelStager = slackChannelStager;
+            _slackMessageStager = slackMessageStager;
         }
 
         [HttpPost("StageSlackChannels")]
@@ -24,6 +26,20 @@ namespace Slack2Teams.Api.Controllers
             try
             {
                 await _slackChannelStager.StageSlackChannels(request);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+        [HttpPost("StageSlackMessages")]
+        public async Task<IActionResult> StageSlackMessages(StageSlackMessageRequest request)
+        {
+            try
+            {
+                await _slackMessageStager.StageSlackMessages(request);
                 return Ok();
             }
             catch (Exception e)

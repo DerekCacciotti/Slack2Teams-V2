@@ -11,6 +11,9 @@ public class Slack2TeamsContext: DbContext
     
     public DbSet<Tenant> Tenants { get; set; }
     public DbSet<StagedSlackChannel> SlackChannels { get; set; }
+    public DbSet<StagedSlackMessage> SlackMessages { get; set; }
+    public DbSet<SlackMessageType> SlackMessageTypes { get; set; }
+    
 
     public Slack2TeamsContext()
     {
@@ -33,6 +36,10 @@ public class Slack2TeamsContext: DbContext
         modelBuilder.Entity<Tenant>().Property(t => t.Editor).IsRequired(false);
         modelBuilder.Entity<StagedSlackChannel>().Property(s => s.Editor).IsRequired(false);
         modelBuilder.Entity<StagedSlackChannel>().Property(s => s.ChannelDescription).IsRequired(false);
+        modelBuilder.Entity<StagedSlackMessage>().Property(sm => sm.Editor).IsRequired(false);
+        modelBuilder.Entity<StagedSlackMessage>().Property(sm => sm.SlackCreatedBy).IsRequired(false);
+        modelBuilder.Entity<StagedSlackMessage>().Ignore(sm => sm.Channel);
+        modelBuilder.Entity<StagedSlackMessage>().Ignore(sm => sm.SlackMessageType);
         base.OnModelCreating(modelBuilder);
     }
 }

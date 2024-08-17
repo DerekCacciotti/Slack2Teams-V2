@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Slack2Teams.Data;
 
@@ -11,9 +12,11 @@ using Slack2Teams.Data;
 namespace Slack2Teams.Data.Migrations
 {
     [DbContext(typeof(Slack2TeamsContext))]
-    partial class Slack2TeamsContextModelSnapshot : ModelSnapshot
+    [Migration("20240817173927_AddingSlackMessages")]
+    partial class AddingSlackMessages
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -141,7 +144,12 @@ namespace Slack2Teams.Data.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnOrder(5);
 
+                    b.Property<Guid>("SlackMessageTypePK")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("SlackMessagePK");
+
+                    b.HasIndex("SlackMessageTypePK");
 
                     b.ToTable("SlackMessages");
                 });
@@ -177,6 +185,17 @@ namespace Slack2Teams.Data.Migrations
                     b.HasKey("TenantPK");
 
                     b.ToTable("Tenant");
+                });
+
+            modelBuilder.Entity("Slack2Teams.Data.Models.StagedSlackMessage", b =>
+                {
+                    b.HasOne("Slack2Teams.Data.Models.SlackMessageType", "SlackMessageType")
+                        .WithMany()
+                        .HasForeignKey("SlackMessageTypePK")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SlackMessageType");
                 });
 #pragma warning restore 612, 618
         }

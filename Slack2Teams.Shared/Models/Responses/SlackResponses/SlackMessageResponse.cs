@@ -3,7 +3,7 @@ namespace Slack2Teams.Shared.Models.Responses.SlackResponses;
 public class SlackMessageResponse
 {
     public bool ok { get; set; }
-    public List<Message> messages { get; set; }
+    public List<SlackMessage> messages { get; set; }
     public bool has_more { get; set; }
     public int pin_count { get; set; }
     public object channel_actions_ts { get; set; }
@@ -11,7 +11,7 @@ public class SlackMessageResponse
     public string channelid { get; set; }
     public ResponseMetadata response_metadata { get; set; }
 }
-public class File
+public class SlackFile
     {
         public string id { get; set; }
         public int created { get; set; }
@@ -67,7 +67,7 @@ public class File
         public bool? preview_is_truncated { get; set; }
     }
 
-public class Message
+public class SlackMessage
 {
     public string subtype { get; set; }
     public string text { get; set; }
@@ -76,7 +76,7 @@ public class Message
     public string ts { get; set; }
     public string bot_id { get; set; }
     public List<Block> blocks { get; set; }
-    public List<File> files { get; set; }
+    public List<SlackFile> files { get; set; }
     public bool? upload { get; set; }
     public string user { get; set; }
     public bool? display_as_bot { get; set; }

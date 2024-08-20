@@ -18,15 +18,17 @@ public class SlackMessageStagingService : ISlackMessageStagingService
 
     public async Task<bool> StageSlackMessage(List<StageSlackMessageRequest> requests)
     {
-        var token = string.Empty;
         var firstRequest = requests.FirstOrDefault();
-        if (firstRequest != null)
+        if (firstRequest == null)
         {
-            token = firstRequest.UserToken;
+            return false;
         }
+
+        var token = firstRequest.UserToken;
+
         try
         {
-            var jsonConfig = new JsonSerializerOptions()
+            var jsonConfig = new JsonSerializerOptions
             {
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
             };
@@ -34,13 +36,18 @@ public class SlackMessageStagingService : ISlackMessageStagingService
             var client = _http.CreateClient("Slack2TeamsApi");
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            foreach (var request in requests)
+           
+            var tasks = requests.Select(async request =>
             {
                 var json = JsonSerializer.Serialize(request, jsonConfig);
                 var response = await client.PostAsync("Staging/StageSlackMessages", new StringContent(json, Encoding.UTF8, "application/json"));
-            }
+                return response.IsSuccessStatusCode;
+            });
+            
+            var results = await Task.WhenAll(tasks);
 
-            return true;
+           
+            return results.All(r => r);
         }
         catch
         {

@@ -15,16 +15,36 @@ public class SlackMessageStagingService : ISlackMessageStagingService
     {
         _http = http;
     }
-    public async Task StageSlackMessage(StageSlackMessageRequest request)
+
+    public async Task<bool> StageSlackMessage(List<StageSlackMessageRequest> requests)
     {
-        var jsonConfig = new JsonSerializerOptions()
+        var token = string.Empty;
+        var firstRequest = requests.FirstOrDefault();
+        if (firstRequest != null)
         {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
-        };
-        var clinet = _http.CreateClient("Slack2TeamsApi");
-        clinet.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", request.UserToken);
-        var json = JsonSerializer.Serialize(request, jsonConfig);
-        var response = await clinet.PostAsync("Staging/StageSlackMessages", new StringContent(json, Encoding.UTF8, "application/json"));
-        //return response.IsSuccessStatusCode;
+            token = firstRequest.UserToken;
+        }
+        try
+        {
+            var jsonConfig = new JsonSerializerOptions()
+            {
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+            };
+
+            var client = _http.CreateClient("Slack2TeamsApi");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            foreach (var request in requests)
+            {
+                var json = JsonSerializer.Serialize(request, jsonConfig);
+                var response = await client.PostAsync("Staging/StageSlackMessages", new StringContent(json, Encoding.UTF8, "application/json"));
+            }
+
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
     }
 }

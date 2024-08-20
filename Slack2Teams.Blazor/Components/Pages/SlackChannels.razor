@@ -7,6 +7,13 @@
                 You must select at least one channel to import.
             </RadzenAlert>
         }
+        
+        @if (channelSuccess)
+        {
+            <RadzenAlert AlertStyle="AlertStyle.Success" Variant="Variant.Flat">
+                Successfully imported the selected channels.
+            </RadzenAlert>
+        }
         <ST2SlackChannelsGrid SlackChannels="@_slackChannelResponse.channels" @ref="_slackChannelsGrid"></ST2SlackChannelsGrid>
     </Content>
     <ActionButtons>

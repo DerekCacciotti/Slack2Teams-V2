@@ -34,6 +34,7 @@ public partial class SlackChannels : ComponentBase
     private SlackChannelResponse _slackChannelResponse = new SlackChannelResponse();
     private ST2SlackChannelsGrid _slackChannelsGrid { get; set; }
     private bool hasError = false;
+    private bool channelSuccess = false;
     
     
     protected override async Task OnInitializedAsync()
@@ -98,18 +99,12 @@ public partial class SlackChannels : ComponentBase
                  UserToken = authToken
              }).ToList();
 
-             foreach (var request in requests)
-             {
-                 await _slackMessageStagingService.StageSlackMessage(request);
-             }
-            
-             // var messages = responses.SelectMany(r => r.messages).ToList();
-             // var request = new StageSlackMessageRequest()
+            channelSuccess = await _slackMessageStagingService.StageSlackMessage(requests);
+             // foreach (var request in requests)
              // {
-             //     Messages = messages,
-             //     TenantFK = tenantInfo.TenantFK,
-             //     UserToken = authToken
-             // };
+             //     await _slackMessageStagingService.StageSlackMessage(request);
+             // }
+
 
 
             }

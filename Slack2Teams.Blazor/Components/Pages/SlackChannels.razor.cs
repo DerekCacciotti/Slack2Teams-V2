@@ -90,18 +90,28 @@ public partial class SlackChannels : ComponentBase
             {
              var selectedChannelIds = selectedChannels.Select(x => x.id).ToList();
              var responses = await GetMessages(selectedChannelIds, tenantInfo);
-             var messages = responses.SelectMany(r => r.messages).ToList();
-             var request = new StageSlackMessageRequest()
+             var requests = responses.Select(x => new StageSlackMessageRequest()
              {
-                 Messages = messages,
+                 Messages = x.messages,
                  TenantFK = tenantInfo.TenantFK,
+                 SlackChannelId = x.channelid,
                  UserToken = authToken
-             };
-             var messageResult = await _slackMessageStagingService.StageSlackMessage(request);
-             if (messageResult)
+             }).ToList();
+
+             foreach (var request in requests)
              {
-                 // redirect for teams 
+                 await _slackMessageStagingService.StageSlackMessage(request);
              }
+            
+             // var messages = responses.SelectMany(r => r.messages).ToList();
+             // var request = new StageSlackMessageRequest()
+             // {
+             //     Messages = messages,
+             //     TenantFK = tenantInfo.TenantFK,
+             //     UserToken = authToken
+             // };
+
+
             }
             else
             {

@@ -6,7 +6,7 @@ using Slack2Teams.Shared.Models.Requests;
 
 namespace Slack2Teams.Api.Controllers
 {
-    [Authorize]
+   [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class StagingController : ControllerBase

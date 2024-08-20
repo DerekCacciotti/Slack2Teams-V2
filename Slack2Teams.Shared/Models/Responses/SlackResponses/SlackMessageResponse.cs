@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Slack2Teams.Shared.Models.Responses.SlackResponses;
 
 public class SlackMessageResponse
@@ -34,53 +36,20 @@ public class SlackFile
         public string username { get; set; }
         public string url_private { get; set; }
         public string url_private_download { get; set; }
-        public string media_display_type { get; set; }
-        public string thumb_64 { get; set; }
-        public string thumb_80 { get; set; }
-        public string thumb_360 { get; set; }
-        public int thumb_360_w { get; set; }
-        public int thumb_360_h { get; set; }
-        public string thumb_480 { get; set; }
-        public int thumb_480_w { get; set; }
-        public int thumb_480_h { get; set; }
-        public string thumb_160 { get; set; }
-        public string thumb_360_gif { get; set; }
-        public string thumb_480_gif { get; set; }
-        public int image_exif_rotation { get; set; }
-        public int original_w { get; set; }
-        public int original_h { get; set; }
-        public string deanimate { get; set; }
-        public string deanimate_gif { get; set; }
-        public string permalink { get; set; }
-        public string permalink_public { get; set; }
-        public bool is_starred { get; set; }
-        public bool has_rich_preview { get; set; }
-        public string file_access { get; set; }
-        public string thumb_pdf { get; set; }
-        public int? thumb_pdf_w { get; set; }
-        public int? thumb_pdf_h { get; set; }
-        public string edit_link { get; set; }
-        public string preview { get; set; }
-        public string preview_highlight { get; set; }
-        public int? lines { get; set; }
-        public int? lines_more { get; set; }
-        public bool? preview_is_truncated { get; set; }
+        
     }
 
 public class SlackMessage
 {
-    public string subtype { get; set; }
+    public string? subtype { get; set; }
     public string text { get; set; }
-    public string username { get; set; }
+    //public string username { get; set; }
     public string type { get; set; }
     public string ts { get; set; }
-    public string bot_id { get; set; }
-    public List<Block> blocks { get; set; }
-    public List<SlackFile> files { get; set; }
+    public string? bot_id { get; set; }
+    //public List<Block>? blocks { get; set; }
+    public List<SlackFile>? files { get; set; }
     public bool? upload { get; set; }
-    public string user { get; set; }
-    public bool? display_as_bot { get; set; }
-    public string team { get; set; }
 }
 public class Block
 {

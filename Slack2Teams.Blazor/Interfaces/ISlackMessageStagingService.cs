@@ -4,5 +4,5 @@ namespace Slack2Teams.Blazor.Interfaces;
 
 public interface ISlackMessageStagingService
 {
-    Task<bool> StageSlackMessage(StageSlackMessageRequest request);
+    Task StageSlackMessage(StageSlackMessageRequest request);
 }

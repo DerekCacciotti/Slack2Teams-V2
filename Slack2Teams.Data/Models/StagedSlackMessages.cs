@@ -22,11 +22,11 @@ public class StagedSlackMessage : IDatabase
     
     [Column(Order = 2)]
     public string MesaageText { get; set; }
+   
     [Column(Order = 3)]
-    public string SlackCreatedBy { get; set; }
+    public string SlackTimeStamp { get; set; }
     [Column(Order = 4)]
-    public DateTime SlackCreateDate { get; set; }
-    [Column(Order = 5)]
+    public DateTime? SlackCreateDate { get; set; }
     public Guid SlackMessageTypeFK { get; set; }
     public SlackMessageType SlackMessageType { get; set; }
     

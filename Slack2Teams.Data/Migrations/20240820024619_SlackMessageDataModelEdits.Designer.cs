@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Slack2Teams.Data;
 
@@ -11,9 +12,11 @@ using Slack2Teams.Data;
 namespace Slack2Teams.Data.Migrations
 {
     [DbContext(typeof(Slack2TeamsContext))]
-    partial class Slack2TeamsContextModelSnapshot : ModelSnapshot
+    [Migration("20240820024619_SlackMessageDataModelEdits")]
+    partial class SlackMessageDataModelEdits
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -129,12 +132,9 @@ namespace Slack2Teams.Data.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnOrder(2);
 
-                    b.Property<DateTime?>("SlackCreateDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnOrder(4);
-
                     b.Property<Guid>("SlackMessageTypeFK")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnOrder(4);
 
                     b.Property<string>("SlackTimeStamp")
                         .IsRequired()

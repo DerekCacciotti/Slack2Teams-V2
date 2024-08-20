@@ -49,8 +49,8 @@ public class SlackMessagesStagingService : ISlackMessageStager
         var stagedmessages = request.Messages.Select(m => new StagedSlackMessage
         {
             MesaageText = m.text,
-            SlackCreateDate = DateTimeOffset.FromUnixTimeSeconds(long.Parse(m.ts)).DateTime,
-            SlackCreatedBy = !string.IsNullOrEmpty(m.user) ? m.user : null,
+            SlackTimeStamp = m.ts,
+            //SlackCreateDate = m.ts.HasValue ? DateTimeOffset.FromUnixTimeSeconds(m.ts.Value).DateTime : null,
             Channel = slackChannel,
             ChannelFK = slackChannel.SlackChannelPK,
             Creator = slackChannel.Creator,

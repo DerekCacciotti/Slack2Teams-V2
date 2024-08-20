@@ -37,7 +37,7 @@ public class Slack2TeamsContext: DbContext
         modelBuilder.Entity<StagedSlackChannel>().Property(s => s.Editor).IsRequired(false);
         modelBuilder.Entity<StagedSlackChannel>().Property(s => s.ChannelDescription).IsRequired(false);
         modelBuilder.Entity<StagedSlackMessage>().Property(sm => sm.Editor).IsRequired(false);
-        modelBuilder.Entity<StagedSlackMessage>().Property(sm => sm.SlackCreatedBy).IsRequired(false);
+        modelBuilder.Entity<StagedSlackMessage>().Property(sm => sm.SlackTimeStamp);
         modelBuilder.Entity<StagedSlackMessage>().Ignore(sm => sm.Channel);
         modelBuilder.Entity<StagedSlackMessage>().Ignore(sm => sm.SlackMessageType);
         base.OnModelCreating(modelBuilder);

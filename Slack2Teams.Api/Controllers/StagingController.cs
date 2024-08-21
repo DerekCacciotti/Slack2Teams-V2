@@ -48,5 +48,11 @@ namespace Slack2Teams.Api.Controllers
                 throw;
             }
         }
+
+        [HttpPost("GetStagedSlackData")]
+        public async Task<IActionResult> GetStagedSlackData(GetStagedSlackDataRequest request)
+        {
+            return Ok();
+        }
     }
 }

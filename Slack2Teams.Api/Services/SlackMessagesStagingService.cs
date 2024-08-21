@@ -50,13 +50,13 @@ public class SlackMessagesStagingService : ISlackMessageStager
         {
             MesaageText = m.text,
             SlackTimeStamp = m.ts,
-            //SlackCreateDate = m.ts.HasValue ? DateTimeOffset.FromUnixTimeSeconds(m.ts.Value).DateTime : null,
             Channel = slackChannel,
             ChannelFK = slackChannel.SlackChannelPK,
             Creator = slackChannel.Creator,
             CreateDate = DateTime.Now,
             SlackMessageType = messageType,
-            SlackMessageTypeFK = messageType.SlackMessageTypePK
+            SlackMessageTypeFK = messageType.SlackMessageTypePK,
+            HasFile = m.files != null && m.files.Count > 0 ? true : false
         }).ToList();
 
         await _ctx.SlackMessages.AddRangeAsync(stagedmessages);

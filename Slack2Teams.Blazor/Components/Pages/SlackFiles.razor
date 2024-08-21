@@ -1,0 +1,13 @@
+@page "/SlackFiles"
+<S2TCard Title="Would You like to import the files that were uploaded to your Slack Channels into Microsoft Teams?">
+    <Content>
+        <RadzenAlert AlertStyle="AlertStyle.Success" Variant="Variant.Flat">
+            Please select a option to import the files.
+        </RadzenAlert>
+    </Content>
+    <ActionButtons>
+        <S2TButton Icon="check" Text="Yes" ButtonColor="ButtonStyle.Success" OnClick="ImportFiles" Styles="margin-right:5px;"></S2TButton>
+        <S2TButton Icon="block" Text="No" ButtonColor="ButtonStyle.Danger"></S2TButton>
+    </ActionButtons>
+</S2TCard>
+

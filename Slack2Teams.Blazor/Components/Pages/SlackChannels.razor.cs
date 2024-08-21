@@ -39,8 +39,6 @@ public partial class SlackChannels : ComponentBase
     
     protected override async Task OnInitializedAsync()
     {
-       
-        
         if (_httpContextAccessor != null && _httpContextAccessor.HttpContext.Request.Cookies.TryGetValue("SlackToken", out var cookieValue))
         {
             var tenantPK = await _userTenantService.GetTenantIdForUser();
@@ -100,13 +98,12 @@ public partial class SlackChannels : ComponentBase
              }).ToList();
 
             channelSuccess = await _slackMessageStagingService.StageSlackMessage(requests);
-             // foreach (var request in requests)
-             // {
-             //     await _slackMessageStagingService.StageSlackMessage(request);
-             // }
 
-
-
+            if (channelSuccess)
+            {
+                _navigationManager.NavigateTo($"SlackFiles?TenantFK={tenantInfo.TenantFK}");
+            }
+            
             }
             else
             {

@@ -17,7 +17,6 @@ public class StagedSlackMessage : IDatabase
     public Guid SlackMessagePK { get; set; }
     [Column(Order = 1)]
     public Guid ChannelFK { get; set; }
-    
     public StagedSlackChannel Channel { get; set; }
     
     [Column(Order = 2)]
@@ -29,7 +28,7 @@ public class StagedSlackMessage : IDatabase
     public DateTime? SlackCreateDate { get; set; }
     public Guid SlackMessageTypeFK { get; set; }
     public SlackMessageType SlackMessageType { get; set; }
-    
+    public bool? HasFile { get; set; }
     public string Creator { get; set; }
     public DateTime CreateDate { get; set; }
     public string Editor { get; set; }

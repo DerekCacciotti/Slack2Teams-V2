@@ -21,12 +21,16 @@ public class SlackMessageDataLoader : ISlackMessageDataLoader
             throw new ApplicationException("Error loading tenant");
         }
 
-        var messagesIds = await _ctx.SlackChannels.Include(sc => sc.Messages)
-            .Where(sc => sc.TenantFK == tenantFK)
-            .SelectMany(sc => sc.Messages)
-            .Where(x => (x.HasFile.HasValue && x.HasFile.Value))
-            .Select(sc => sc.SlackMessagePK)
-            
+        var messagesIds = await _ctx.SlackChannels.Join(_ctx.SlackMessages, channel => channel.SlackChannelPK, messages => messages.ChannelFK,
+                (c, m) => new 
+                {
+                    TenantFK = tenantFK,
+                    ChannelFK = c.SlackChannelPK,
+                    MessagePK = m.SlackMessagePK,
+                    HasFile = m.HasFile
+                })
+            .Where(x => x.TenantFK == tenantFK && (x.HasFile.HasValue && x.HasFile == true))
+            .Select(d => d.MessagePK)
             .ToListAsync();
 
 

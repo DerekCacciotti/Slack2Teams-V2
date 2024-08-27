@@ -4,5 +4,5 @@ namespace Slack2Teams.Api.Interfaces;
 
 public interface ISlackMessageDataLoader
 {
-    Task<List<StagedSlackMessage>> GetStagedSlackMessagesForFileMigration(Guid tenantFK);
+    Task<List<Guid>> GetStagedSlackMessagesForFileMigration(Guid tenantFK);
 }

@@ -25,6 +25,7 @@ public class StagedSlackChannel : IDatabase
     public DateTime CreateDate { get; set; }
     public string Editor { get; set; }
     public DateTime? EditDate { get; set; }
+    public virtual List<StagedSlackMessage> Messages { get; set; }
 
     public StagedSlackChannel()
     {

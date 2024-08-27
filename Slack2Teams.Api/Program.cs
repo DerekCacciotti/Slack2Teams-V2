@@ -69,6 +69,7 @@ builder.Services.AddScoped<ISlackChannelStager, SlackChannelStagingService>();
 builder.Services.AddScoped<ISlackMessageStager, SlackMessagesStagingService>();
 builder.Services.AddScoped<ISlackChannelLoader, SlackChannelLoader>();
 builder.Services.AddScoped<ISlackMessageTypeLoader, SlackMessageTypeLoader>();
+builder.Services.AddScoped<ISlackMessageDataLoader, SlackMessageDataLoader>();
 
 
 var app = builder.Build();

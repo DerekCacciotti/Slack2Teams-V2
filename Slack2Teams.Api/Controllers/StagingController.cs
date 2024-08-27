@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Slack2Teams.Api.Interfaces;
 using Slack2Teams.Shared.Models.Requests;
+using Slack2Teams.Shared.Models.Responses;
 
 namespace Slack2Teams.Api.Controllers
 {
@@ -13,11 +14,13 @@ namespace Slack2Teams.Api.Controllers
     {
         private readonly ISlackChannelStager _slackChannelStager;
         private readonly ISlackMessageStager _slackMessageStager;
+        private readonly ISlackMessageDataLoader _messageDataLoader;
 
-        public StagingController(ISlackChannelStager slackChannelStager, ISlackMessageStager slackMessageStager)
+        public StagingController(ISlackChannelStager slackChannelStager, ISlackMessageStager slackMessageStager, ISlackMessageDataLoader messageDataLoader)
         {
             _slackChannelStager = slackChannelStager;
             _slackMessageStager = slackMessageStager;
+            _messageDataLoader = messageDataLoader;
         }
 
         [HttpPost("StageSlackChannels")]
@@ -52,7 +55,20 @@ namespace Slack2Teams.Api.Controllers
         [HttpPost("GetStagedSlackData")]
         public async Task<IActionResult> GetStagedSlackData(GetStagedSlackDataRequest request)
         {
-            return Ok();
+            try
+            {
+                var messagesIds = await _messageDataLoader.GetStagedSlackMessagesForFileMigration(request.TenantFK);
+                return Ok(new StagedMessageResponse()
+                {
+                    MessageIds = messagesIds
+                });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            
         }
     }
 }

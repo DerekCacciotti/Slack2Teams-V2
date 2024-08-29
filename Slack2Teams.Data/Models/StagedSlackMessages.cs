@@ -17,7 +17,7 @@ public class StagedSlackMessage : IDatabase
     public Guid SlackMessagePK { get; set; }
     [Column(Order = 1)]
     public Guid ChannelFK { get; set; }
-    public StagedSlackChannel Channel { get; set; }
+    public virtual StagedSlackChannel Channel { get; set; }
     
     [Column(Order = 2)]
     public string MesaageText { get; set; }

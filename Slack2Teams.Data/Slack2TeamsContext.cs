@@ -27,7 +27,7 @@ public class Slack2TeamsContext: DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(_settings.Value.DataSource.Data);
+        optionsBuilder.UseSqlServer(_settings.Value.DataSource.Data).UseLazyLoadingProxies();
         base.OnConfiguring(optionsBuilder);
     }
 

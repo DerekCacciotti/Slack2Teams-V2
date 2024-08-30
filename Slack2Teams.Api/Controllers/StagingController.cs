@@ -70,5 +70,19 @@ namespace Slack2Teams.Api.Controllers
             }
             
         }
+
+        [HttpPost("StageSlackFile")]
+        public async Task<IActionResult> StageSlackFile(StageSlackFilesMessagesRequest request)
+        {
+            try
+            {
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
     }
 }

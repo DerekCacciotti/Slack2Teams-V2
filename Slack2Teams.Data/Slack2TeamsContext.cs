@@ -14,6 +14,7 @@ public class Slack2TeamsContext: DbContext
     public DbSet<StagedSlackMessage> SlackMessages { get; set; }
     public DbSet<SlackMessageType> SlackMessageTypes { get; set; }
     
+    public DbSet<StagedSlackFile> SlackFiles { get; set; }
 
     public Slack2TeamsContext()
     {
@@ -41,6 +42,12 @@ public class Slack2TeamsContext: DbContext
         modelBuilder.Entity<StagedSlackMessage>().Property(sm => sm.SlackTimeStamp);
         modelBuilder.Entity<StagedSlackMessage>().Ignore(sm => sm.Channel);
         modelBuilder.Entity<StagedSlackMessage>().Ignore(sm => sm.SlackMessageType);
+        modelBuilder.Entity<StagedSlackFile>().Property(f => f.Editor).IsRequired(false);
+        modelBuilder.Entity<StagedSlackFile>().Ignore(f => f.SlackMessage);
+        modelBuilder.Entity<StagedSlackFile>().Property(f => f.SlackTimeStamp).IsRequired(false);
+        modelBuilder.Entity<StagedSlackFile>().Property(f => f.SourceID).IsRequired(false);
+        modelBuilder.Entity<StagedSlackFile>().Property(f => f.SlackCreator).IsRequired(false);
+        modelBuilder.Entity<StagedSlackFile>().Property(f => f.AzureBlobUrl).IsRequired(false);
         
         base.OnModelCreating(modelBuilder);
     }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Slack2Teams.Data;
 
@@ -11,9 +12,11 @@ using Slack2Teams.Data;
 namespace Slack2Teams.Data.Migrations
 {
     [DbContext(typeof(Slack2TeamsContext))]
-    partial class Slack2TeamsContextModelSnapshot : ModelSnapshot
+    [Migration("20240830035857_adding_SlackMessageFile")]
+    partial class adding_SlackMessageFile
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -142,7 +145,7 @@ namespace Slack2Teams.Data.Migrations
 
                     b.Property<bool?>("IsSlackFileExternal")
                         .HasColumnType("bit")
-                        .HasColumnOrder(7);
+                        .HasColumnOrder(6);
 
                     b.Property<string>("MimeType")
                         .IsRequired()

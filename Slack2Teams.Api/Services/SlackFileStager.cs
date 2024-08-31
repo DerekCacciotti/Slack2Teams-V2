@@ -33,18 +33,18 @@ public class SlackFileStager : ISlackFileStager
         }
 
         var messages = await _ctx.SlackMessages.Where(m => request.MessageIds.Contains(m.SlackMessagePK)).ToListAsync();
-        var slackData = JsonSerializer.Deserialize<SlackMessageResponse>(request.SlackJson);
-        if (!slackData.messages.Any())
+        var slackData = JsonSerializer.Deserialize<StageSlackMessageRequest>(request.SlackJson);
+        if (!slackData.Messages.Any())
         {
             throw new ApplicationException("Slack json has no data");
         }
 
-        var rawMessages = slackData.messages;
+        var rawMessages = slackData.Messages.Where(x => x.files != null || x.files.Count != 0);
 
         foreach (var data in messages)
         {
             var filedata = rawMessages.Where(rm => rm.ts == data.SlackTimeStamp).FirstOrDefault();
-            if (filedata.files != null && filedata != null && filedata.files.Any())
+            if ( filedata != null && filedata.files.Any())
             {
                 var filestoDownload = filedata.files.Select(x => x.url_private).ToList();
                 foreach (var fileUrl in filestoDownload)
@@ -58,7 +58,7 @@ public class SlackFileStager : ISlackFileStager
                     StagedSlackMessageFK = data.SlackMessagePK,
                     FileType = sf.mimetype,
                     SourceID = sf.id,
-                    SlackTimeStamp = !string.IsNullOrEmpty(sf.timestamp) ? sf.timestamp : sf.created,
+                    SlackTimeStamp = !string.IsNullOrEmpty(sf.timestamp.ToString()) ? sf.timestamp.ToString() : sf.created.ToString(),
                     SlackDownloadUrl = sf.url_private,
                     IsPublicSlackFile = sf.is_public,
                     IsSlackFileExternal = sf.is_external,

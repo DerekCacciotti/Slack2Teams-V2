@@ -36,5 +36,15 @@ public class UserTenantService: IUserTenantService
             return Guid.Empty;
         }
     }
-    
+
+    public async Task<UserTenantInfo?> GetCurrentTenantInfo()
+    {
+        var tenantJson = await _localStorage.GetItemAsStringAsync("S2TTenant");
+        if (string.IsNullOrEmpty(tenantJson))
+        {
+            return null;
+        }
+        var tennantInfo = JsonConvert.DeserializeObject<UserTenantInfo>(tenantJson);
+        return tennantInfo;
+    }
 }

@@ -32,6 +32,7 @@ builder.Services.AddScoped<IUserTenantService, UserTenantService>();
 builder.Services.AddScoped<ISlackChannelStagerService, SlackChannelStagingService>();
 builder.Services.AddScoped<ISlackMessageStagingService, SlackMessageStagingService>();
 builder.Services.AddScoped<IStagedDataService, StagedDataService>();
+builder.Services.AddScoped<ISlackFileStagingService, SlackFileStagingService>();
 builder.Services.AddRadzenComponents();
 
 

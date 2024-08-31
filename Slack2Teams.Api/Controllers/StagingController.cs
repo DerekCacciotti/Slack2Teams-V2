@@ -15,12 +15,14 @@ namespace Slack2Teams.Api.Controllers
         private readonly ISlackChannelStager _slackChannelStager;
         private readonly ISlackMessageStager _slackMessageStager;
         private readonly ISlackMessageDataLoader _messageDataLoader;
+        private readonly ISlackFileStager _slackFileStager;
 
-        public StagingController(ISlackChannelStager slackChannelStager, ISlackMessageStager slackMessageStager, ISlackMessageDataLoader messageDataLoader)
+        public StagingController(ISlackChannelStager slackChannelStager, ISlackMessageStager slackMessageStager, ISlackMessageDataLoader messageDataLoader, ISlackFileStager slackFileStager)
         {
             _slackChannelStager = slackChannelStager;
             _slackMessageStager = slackMessageStager;
             _messageDataLoader = messageDataLoader;
+            _slackFileStager = slackFileStager;
         }
 
         [HttpPost("StageSlackChannels")]
@@ -76,6 +78,7 @@ namespace Slack2Teams.Api.Controllers
         {
             try
             {
+                await _slackFileStager.StageSlackFiles(request);
                 return Ok();
             }
             catch (Exception e)

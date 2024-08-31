@@ -16,8 +16,8 @@ public class SlackMessageResponse
 public class SlackFile
     {
         public string id { get; set; }
-        public int created { get; set; }
-        public int timestamp { get; set; }
+        public string created { get; set; }
+        public string timestamp { get; set; }
         public string name { get; set; }
         public string title { get; set; }
         public string mimetype { get; set; }

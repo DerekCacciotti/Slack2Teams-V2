@@ -31,6 +31,7 @@ public class Slack
     public string ClientID { get; set; }
     public string ClientSecret { get; set; }
     public string BaseUrl { get; set; }
+    public string SlackFilesUrl { get; set; }
 }
 
 public class Blazor

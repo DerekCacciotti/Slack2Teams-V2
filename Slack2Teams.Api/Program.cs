@@ -64,12 +64,15 @@ builder.Services.AddScoped<IAuth, AuthService>();
 builder.Services.AddScoped<ITenantService, TenantService>();
 builder.Services.AddScoped<ISlackTokenManager, SlackTokenManager>();
 builder.Services.AddHttpClient("SlackApi", sa => sa.BaseAddress = new Uri(appsettings.SharedSettings.Slack.BaseUrl));
+builder.Services.AddHttpClient("SlackFiles", c => c.BaseAddress = new Uri(appsettings.SharedSettings.Slack.SlackFilesUrl));
 builder.Services.AddScoped<ISlackApiCaller, SlackApiCaller>();
 builder.Services.AddScoped<ISlackChannelStager, SlackChannelStagingService>();
 builder.Services.AddScoped<ISlackMessageStager, SlackMessagesStagingService>();
 builder.Services.AddScoped<ISlackChannelLoader, SlackChannelLoader>();
 builder.Services.AddScoped<ISlackMessageTypeLoader, SlackMessageTypeLoader>();
 builder.Services.AddScoped<ISlackMessageDataLoader, SlackMessageDataLoader>();
+builder.Services.AddScoped<ISlackFileDownloader, SlackFileDownloader>();
+builder.Services.AddScoped<ISlackFileStager, SlackFileStager>();
 
 
 var app = builder.Build();

@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Slack2Teams.Api.Interfaces;
 using Slack2Teams.Data;
 using Slack2Teams.Data.Models;
+using Slack2Teams.Shared.Models;
 using Slack2Teams.Shared.Models.Requests;
 using Slack2Teams.Shared.Models.Responses.SlackResponses;
 using JsonSerializer = System.Text.Json.JsonSerializer;
@@ -39,42 +40,40 @@ public class SlackFileStager : ISlackFileStager
             throw new ApplicationException("Slack json has no data");
         }
 
-        var rawMessages = slackData.Messages.Where(x => x.files != null || x.files.Count != 0);
-
-        foreach (var data in messages)
-        {
-            var filedata = rawMessages.Where(rm => rm.ts == data.SlackTimeStamp).FirstOrDefault();
-            if ( filedata != null && filedata.files.Any())
+        var rawMessages = slackData.Messages.Where(x => x.files != null)
+            .Select(x => new
             {
-                var filestoDownload = filedata.files.Select(x => x.url_private).ToList();
-                foreach (var fileUrl in filestoDownload)
-                {
-                    await _slackFileDownloader.DownloadFileFromSlack(fileUrl, request.UserTenantInfo.Token);
-                }
-                var slackfiles = filedata.files.Select(sf => new StagedSlackFile()
-                {
-                    FileName = sf.name,
-                    SlackMessage = data,
-                    StagedSlackMessageFK = data.SlackMessagePK,
-                    FileType = sf.mimetype,
-                    SourceID = sf.id,
-                    SlackTimeStamp = !string.IsNullOrEmpty(sf.timestamp.ToString()) ? sf.timestamp.ToString() : sf.created.ToString(),
-                    SlackDownloadUrl = sf.url_private,
-                    IsPublicSlackFile = sf.is_public,
-                    IsSlackFileExternal = sf.is_external,
-                    CreateDate = DateTime.Now,
-                    Creator = data.Creator,
-                    SlackCreator = sf.user
-                }).ToList();
-                await _ctx.SlackFiles.AddRangeAsync(slackfiles);
-                await _ctx.SaveChangesAsync();
+                MessageText = x.text,
+                SlackTimeStamp = x.ts,
+                Files = x.files
+            }).ToList();
 
-                
-                
-
+        var filesToImported = rawMessages.Join(messages, rm => rm.MessageText,
+            m => m.MesaageText, (rm, m) => new SlackFileImport()
+            {
+                MessageFK = m.SlackMessagePK,
+                Files = rm.Files
             }
-            
-        }
+        ).ToList();
 
+        foreach (var stagedFile in from data in filesToImported from file in data.Files select new StagedSlackFile()
+                 {
+                     StagedSlackMessageFK = data.MessageFK,
+                     FileName = file.name,
+                     SlackDownloadUrl = file.url_private,
+                     FileType = file.filetype,
+                     MimeType = file.mimetype,
+                     SlackCreator = file.user,
+                     SlackTimeStamp = file.created.ToString(),
+                     SourceID = file.id,
+                     Creator = request.CreatedBy,
+                     CreateDate = DateTime.Now,
+                     IsSlackFileExternal = file.is_external,
+                     IsPublicSlackFile = file.is_public
+                 })
+        
+            await _ctx.SlackFiles.AddAsync(stagedFile);
+        
+        await _ctx.SaveChangesAsync();
     }
 }
